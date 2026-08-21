@@ -67,6 +67,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-teal-500 selection:text-white">
 
+    <!-- Top Navigation Header -->
     <header class="bg-white/90 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
             <div class="flex items-center space-x-3">
@@ -97,6 +98,7 @@
         </div>
     </header>
 
+    <!-- Main Content Container -->
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
 
         <!-- Loving Greeting & 30-Day Doctor Checkpoint Banner -->
@@ -138,15 +140,15 @@
                     <!-- 30-Day Checkpoint Card -->
                     <div class="bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/15">
                         <div class="flex justify-between items-center text-xs text-slate-300 mb-1.5">
-                            <!-- Chart Legend -->
-                            <div class="flex flex-wrap items-center justify-center gap-3 text-xs pt-2 text-slate-600 border-t border-slate-100">
-                                <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-lime-500 inline-block"></span> Optimal (&lt;120 and &lt;80)</span>
-                                <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-green-500 inline-block"></span> Normal (120-129 or 80-84)</span>
-                                <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-yellow-400 inline-block"></span> High Normal (130-139 or 85-89)</span>
-                                <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span> Grade 1 (140-159 or 90-99)</span>
-                                <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-orange-600 inline-block"></span> Grade 2 (160-179 or 100-109)</span>
-                                <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-red-600 inline-block"></span> Grade 3 (≥180 or ≥110)</span>
-                            </div>
+                            <span class="flex items-center gap-1.5"><i class="fa-solid fa-calendar-check text-teal-400"></i> 30-Day Doctor Checkpoint</span>
+                            <span id="checkpointDaysText" class="font-bold text-teal-300">Day 1 of 30</span>
+                        </div>
+                        <div class="w-full bg-slate-800/80 rounded-full h-2.5 overflow-hidden p-0.5">
+                            <div id="checkpointBar" class="bg-gradient-to-r from-teal-400 to-rose-400 h-1.5 rounded-full transition-all duration-500" style="width: 3.3%"></div>
+                        </div>
+                        <div class="flex justify-between items-center text-[10px] text-slate-400 mt-1.5">
+                            <span id="checkpointStartDate">Started: Today</span>
+                            <span id="totalLogsCounter" class="font-semibold text-rose-300">0 Total Logs</span>
                         </div>
                     </div>
                 </div>
@@ -317,7 +319,7 @@
                                 </label>
                             </div>
 
-                            <!-- Live AHA Category Indicator -->
+                            <!-- Live Category Indicator -->
                             <div id="liveCategoryBox" class="p-3 rounded-xl bg-slate-50 border border-slate-200 transition-all">
                                 <div class="flex items-center justify-between">
                                     <span class="text-xs font-medium text-slate-600">Category Evaluation:</span>
@@ -372,14 +374,17 @@
                             <canvas id="bpChart"></canvas>
                         </div>
 
-                        <!-- Chart Legend -->
-                        <div class="flex flex-wrap items-center justify-center gap-3 text-xs pt-2 text-slate-600 border-t border-slate-100">
-                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-lime-500 inline-block"></span> Optimal (&lt;120 and &lt;80)</span>
-                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-green-500 inline-block"></span> Normal (120-129 or 80-84)</span>
-                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-yellow-400 inline-block"></span> High Normal (130-139 or 85-89)</span>
-                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span> Grade 1 (140-159 or 90-99)</span>
-                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-orange-600 inline-block"></span> Grade 2 (160-179 or 100-109)</span>
-                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-red-600 inline-block"></span> Grade 3 (≥180 or ≥110)</span>
+                        <!-- Chart Legend (InaSH 2019) -->
+                        <div class="flex flex-wrap items-center justify-center gap-3 text-[11px] sm:text-xs pt-3 pb-2 text-slate-600 border-t border-slate-100">
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span> Optimal (&lt;120/&lt;80)</span>
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-lime-400 inline-block"></span> Normal (120-129/80-84)</span>
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-yellow-400 inline-block"></span> High Normal (130-139/85-89)</span>
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span> Grade 1 (140-159/90-99)</span>
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-red-600 inline-block"></span> Grade 2 (160-179/100-109)</span>
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-red-800 inline-block"></span> Grade 3 (≥180/≥110)</span>
+                        </div>
+                        <div class="text-center pt-2">
+                            <p class="text-[10px] font-bold italic text-slate-400">*Based on Indonesian Society of Hypertension (InaSH 2019)</p>
                         </div>
                     </div>
                 </div>
@@ -809,7 +814,7 @@
             renderExerciseTable();
             renderMealsTable();
             renderSleepTable();
-            initChart(); 
+            initChart();
         };
 
         function loadAllStoredLogs() {
@@ -885,20 +890,37 @@
 
             if (isNaN(sys) || isNaN(dia)) return { name: 'Invalid', color: 'bg-slate-100 text-slate-600', border: 'border-slate-300', desc: 'Enter valid numbers.' };
 
-            // InaSH 2019 Guidelines
+            // Logic strictly follows Indonesian Society of Hypertension (InaSH 2019)
+            // It evaluates from highest severity down using "OR" because reaching EITHER threshold places you in that category.
+            
+            // Grade 3 (Severe) / Emergency
             if (sys >= 180 || dia >= 110) {
                 if (hasSymptoms) return { name: 'Hypertensive Emergency', color: 'bg-purple-900 text-white', desc: 'Call emergency medical care immediately.' };
-                return { name: 'Grade 3 Hypertension', color: 'bg-red-600 text-white', desc: 'Severe high blood pressure. Contact healthcare professional immediately.' };
+                return { name: 'Grade 3 Hypertension', color: 'bg-red-800 text-white', desc: 'Severe hypertension. Contact medical care.' };
             }
-            if ((sys >= 160 && sys <= 179) || (dia >= 100 && dia <= 109)) return { name: 'Grade 2 Hypertension', color: 'bg-orange-100 text-orange-900', desc: 'Moderate high blood pressure requiring medical attention.' };
-            if ((sys >= 140 && sys <= 159) || (dia >= 90 && dia <= 99)) return { name: 'Grade 1 Hypertension', color: 'bg-amber-100 text-amber-900', desc: 'Mild high blood pressure.' };
-            if ((sys >= 130 && sys <= 139) || (dia >= 85 && dia <= 89)) return { name: 'High Normal', color: 'bg-yellow-100 text-yellow-900', desc: 'Blood pressure is slightly elevated above normal.' };
-            if ((sys >= 120 && sys <= 129) || (dia >= 80 && dia <= 84)) return { name: 'Normal', color: 'bg-green-100 text-green-900', desc: 'Blood pressure is within normal range.' };
-            if (sys < 120 && dia < 80) return { name: 'Optimal', color: 'bg-lime-100 text-lime-900', desc: 'Optimal blood pressure level.' };
             
-            // Fallback for mixed categories where one is significantly higher, highest category wins logic is usually preferred in practice.
-            // The logic above using 'OR' mostly covers this, but as a safety net:
-            return { name: 'Uncategorized', color: 'bg-slate-100 text-slate-600', desc: 'Check readings with a doctor.' };
+            // Grade 2
+            if (sys >= 160 || dia >= 100) {
+                return { name: 'Grade 2 Hypertension', color: 'bg-red-600 text-white', desc: 'Moderate to severe hypertension.' };
+            }
+            
+            // Grade 1
+            if (sys >= 140 || dia >= 90) {
+                return { name: 'Grade 1 Hypertension', color: 'bg-amber-500 text-white', desc: 'Mild hypertension.' };
+            }
+            
+            // High Normal
+            if (sys >= 130 || dia >= 85) {
+                return { name: 'High Normal', color: 'bg-yellow-400 text-yellow-900', desc: 'High normal blood pressure.' };
+            }
+            
+            // Normal
+            if (sys >= 120 || dia >= 80) {
+                return { name: 'Normal', color: 'bg-lime-400 text-lime-900', desc: 'Normal blood pressure.' };
+            }
+            
+            // Optimal (SYS < 120 AND DIA < 80)
+            return { name: 'Optimal', color: 'bg-emerald-400 text-emerald-900', desc: 'Optimal blood pressure level.' };
         }
 
         function updateLiveCategoryPreview() {
@@ -910,7 +932,8 @@
             const desc = document.getElementById('liveCategoryDesc');
             const symptomsBox = document.getElementById('symptomsBox');
 
-            if (parseInt(sys, 10) > 180 || parseInt(dia, 10) > 120) {
+            // Show symptoms box if readings are extremely high (InaSH Grade 3 thresholds)
+            if (parseInt(sys, 10) >= 180 || parseInt(dia, 10) >= 110) {
                 symptomsBox.classList.remove('hidden');
             } else {
                 symptomsBox.classList.add('hidden');
@@ -1032,11 +1055,22 @@
                 .reduce((sum, l) => sum + (l.duration || 0), 0);
 
             const weeklyPercent = Math.min(100, Math.round((weeklyExMin / 150) * 100));
-            document.getElementById('weeklyExerciseText').textContent = `${weeklyExMin} / 150 min`;
-            document.getElementById('weeklyExerciseBar').style.width = `${weeklyPercent}%`;
-            document.getElementById('weeklyExercisePercent').textContent = `${weeklyPercent}% achieved`;
-            document.getElementById('exWeeklyMinutes').textContent = weeklyExMin;
-            document.getElementById('exWeeklyProgressBar').style.width = `${weeklyPercent}%`;
+            
+            // Safe DOM Updates
+            const weekText = document.getElementById('weeklyExerciseText');
+            if (weekText) weekText.textContent = `${weeklyExMin} / 150 min`;
+            
+            const weekBar = document.getElementById('weeklyExerciseBar');
+            if (weekBar) weekBar.style.width = `${weeklyPercent}%`;
+            
+            const weekPct = document.getElementById('weeklyExercisePercent');
+            if (weekPct) weekPct.textContent = `${weeklyPercent}% achieved`;
+            
+            const exMins = document.getElementById('exWeeklyMinutes');
+            if (exMins) exMins.textContent = weeklyExMin;
+            
+            const exBar = document.getElementById('exWeeklyProgressBar');
+            if (exBar) exBar.style.width = `${weeklyPercent}%`;
 
             // 30-Day Checkpoint counter calculation
             let earliestDateStr = todayStr;
@@ -1049,59 +1083,97 @@
             const checkpointDays = Math.min(30, daysDiff);
             const checkpointPercent = Math.min(100, Math.round((checkpointDays / 30) * 100));
 
-            document.getElementById('checkpointDaysText').textContent = `Day ${checkpointDays} of 30`;
-            document.getElementById('checkpointBar').style.width = `${checkpointPercent}%`;
-            document.getElementById('checkpointStartDate').textContent = `Started: ${earliestDateStr}`;
-            document.getElementById('totalLogsCounter').textContent = `${totalLogs} BP Logs`;
+            const cpText = document.getElementById('checkpointDaysText');
+            if (cpText) cpText.textContent = `Day ${checkpointDays} of 30`;
+            
+            const cpBar = document.getElementById('checkpointBar');
+            if (cpBar) cpBar.style.width = `${checkpointPercent}%`;
+            
+            const cpStart = document.getElementById('checkpointStartDate');
+            if (cpStart) cpStart.textContent = `Started: ${earliestDateStr}`;
+            
+            const tLogs = document.getElementById('totalLogsCounter');
+            if (tLogs) tLogs.textContent = `${totalLogs} BP Logs`;
 
             // Today's readings
             const todayLogs = bpLogs.filter(l => l.date === todayStr);
-            document.getElementById('todayCountDisplay').textContent = `${todayLogs.length} / 3`;
+            const todayCount = document.getElementById('todayCountDisplay');
+            if (todayCount) todayCount.textContent = `${todayLogs.length} / 3`;
 
             const hasM = todayLogs.some(l => l.slot === 'Morning');
             const hasA = todayLogs.some(l => l.slot === 'Afternoon');
             const hasE = todayLogs.some(l => l.slot === 'Evening');
 
-            document.getElementById('slotBadgeMorning').className = `px-1.5 py-0.5 rounded ${hasM ? 'bg-emerald-100 text-emerald-800 font-bold' : 'bg-slate-100 text-slate-400'}`;
-            document.getElementById('slotBadgeAfternoon').className = `px-1.5 py-0.5 rounded ${hasA ? 'bg-emerald-100 text-emerald-800 font-bold' : 'bg-slate-100 text-slate-400'}`;
-            document.getElementById('slotBadgeEvening').className = `px-1.5 py-0.5 rounded ${hasE ? 'bg-emerald-100 text-emerald-800 font-bold' : 'bg-slate-100 text-slate-400'}`;
+            const badgeM = document.getElementById('slotBadgeMorning');
+            if (badgeM) badgeM.className = `px-1.5 py-0.5 rounded ${hasM ? 'bg-emerald-100 text-emerald-800 font-bold' : 'bg-slate-100 text-slate-400'}`;
+            
+            const badgeA = document.getElementById('slotBadgeAfternoon');
+            if (badgeA) badgeA.className = `px-1.5 py-0.5 rounded ${hasA ? 'bg-emerald-100 text-emerald-800 font-bold' : 'bg-slate-100 text-slate-400'}`;
+            
+            const badgeE = document.getElementById('slotBadgeEvening');
+            if (badgeE) badgeE.className = `px-1.5 py-0.5 rounded ${hasE ? 'bg-emerald-100 text-emerald-800 font-bold' : 'bg-slate-100 text-slate-400'}`;
 
             // BP Statistics
             if (totalLogs === 0) {
-                document.getElementById('avgBpDisplay').textContent = '-- / --';
-                document.getElementById('avgBpCategory').textContent = 'No Data';
-                document.getElementById('avgHrDisplay').innerHTML = '-- <span class="text-sm font-normal text-slate-500">BPM</span>';
-                document.getElementById('minHrDisplay').textContent = '--';
-                document.getElementById('maxHrDisplay').textContent = '--';
-                document.getElementById('maxBpDisplay').textContent = '-- / --';
-                document.getElementById('maxBpCategory').textContent = 'No Data';
+                const avgBpDisp = document.getElementById('avgBpDisplay');
+                if (avgBpDisp) avgBpDisp.textContent = '-- / --';
+                const avgCat = document.getElementById('avgBpCategory');
+                if (avgCat) avgCat.textContent = 'No Data';
+                const avgHr = document.getElementById('avgHrDisplay');
+                if (avgHr) avgHr.innerHTML = '-- <span class="text-sm font-normal text-slate-500">BPM</span>';
+                const minHr = document.getElementById('minHrDisplay');
+                if (minHr) minHr.textContent = '--';
+                const maxHr = document.getElementById('maxHrDisplay');
+                if (maxHr) maxHr.textContent = '--';
+                const maxBp = document.getElementById('maxBpDisplay');
+                if (maxBp) maxBp.textContent = '-- / --';
+                const maxBpCat = document.getElementById('maxBpCategory');
+                if (maxBpCat) maxBpCat.textContent = 'No Data';
             } else {
                 const avgSys = Math.round(bpLogs.reduce((acc, l) => acc + l.systol, 0) / totalLogs);
                 const avgDia = Math.round(bpLogs.reduce((acc, l) => acc + l.diastol, 0) / totalLogs);
                 const avgHr = Math.round(bpLogs.reduce((acc, l) => acc + l.hr, 0) / totalLogs);
 
-                document.getElementById('avgBpDisplay').textContent = `${avgSys} / ${avgDia}`;
-                const avgCat = getBPCategory(avgSys, avgDia);
-                document.getElementById('avgBpCategory').textContent = avgCat.name;
-                document.getElementById('avgBpCategory').className = `px-2 py-0.5 rounded text-xs font-semibold ${avgCat.color}`;
+                const avgBpDisp = document.getElementById('avgBpDisplay');
+                if (avgBpDisp) avgBpDisp.textContent = `${avgSys} / ${avgDia}`;
+                
+                const catInfo = getBPCategory(avgSys, avgDia);
+                const avgCat = document.getElementById('avgBpCategory');
+                if (avgCat) {
+                    avgCat.textContent = catInfo.name;
+                    avgCat.className = `px-2 py-0.5 rounded text-xs font-semibold ${catInfo.color}`;
+                }
 
-                document.getElementById('avgHrDisplay').innerHTML = `${avgHr} <span class="text-sm font-normal text-slate-500">BPM</span>`;
-                document.getElementById('minHrDisplay').textContent = Math.min(...bpLogs.map(l => l.hr));
-                document.getElementById('maxHrDisplay').textContent = Math.max(...bpLogs.map(l => l.hr));
+                const avgHrDisp = document.getElementById('avgHrDisplay');
+                if (avgHrDisp) avgHrDisp.innerHTML = `${avgHr} <span class="text-sm font-normal text-slate-500">BPM</span>`;
+                
+                const minHrDisp = document.getElementById('minHrDisplay');
+                if (minHrDisp) minHrDisp.textContent = Math.min(...bpLogs.map(l => l.hr));
+                
+                const maxHrDisp = document.getElementById('maxHrDisplay');
+                if (maxHrDisp) maxHrDisp.textContent = Math.max(...bpLogs.map(l => l.hr));
 
                 const maxLog = bpLogs.reduce((prev, curr) => (prev.systol > curr.systol) ? prev : curr, bpLogs[0]);
-                document.getElementById('maxBpDisplay').textContent = `${maxLog.systol} / ${maxLog.diastol}`;
-                const maxCat = getBPCategory(maxLog.systol, maxLog.diastol, maxLog.hasSymptoms);
-                document.getElementById('maxBpCategory').textContent = maxCat.name;
-                document.getElementById('maxBpCategory').className = `px-2 py-0.5 rounded text-xs font-semibold ${maxCat.color}`;
+                const maxBpDisp = document.getElementById('maxBpDisplay');
+                if (maxBpDisp) maxBpDisp.textContent = `${maxLog.systol} / ${maxLog.diastol}`;
+                
+                const maxCatInfo = getBPCategory(maxLog.systol, maxLog.diastol, maxLog.hasSymptoms);
+                const maxBpCat = document.getElementById('maxBpCategory');
+                if (maxBpCat) {
+                    maxBpCat.textContent = maxCatInfo.name;
+                    maxBpCat.className = `px-2 py-0.5 rounded text-xs font-semibold ${maxCatInfo.color}`;
+                }
             }
 
             // Sleep averages
-            if (sleepLogs.length > 0) {
-                const avgHours = (sleepLogs.reduce((acc, l) => acc + l.hours, 0) / sleepLogs.length).toFixed(1);
-                document.getElementById('avgSleepHoursDisplay').innerHTML = `${avgHours} <span class="text-sm font-normal text-slate-300">hrs / night</span>`;
-            } else {
-                document.getElementById('avgSleepHoursDisplay').innerHTML = `-- <span class="text-sm font-normal text-slate-300">hrs / night</span>`;
+            const slpAvg = document.getElementById('avgSleepHoursDisplay');
+            if (slpAvg) {
+                if (sleepLogs.length > 0) {
+                    const avgHours = (sleepLogs.reduce((acc, l) => acc + l.hours, 0) / sleepLogs.length).toFixed(1);
+                    slpAvg.innerHTML = `${avgHours} <span class="text-sm font-normal text-slate-300">hrs / night</span>`;
+                } else {
+                    slpAvg.innerHTML = `-- <span class="text-sm font-normal text-slate-300">hrs / night</span>`;
+                }
             }
         }
 
@@ -1404,9 +1476,13 @@
             const activeClass = 'px-2.5 py-1 rounded-lg font-medium text-teal-700 bg-white shadow-xs transition';
             const inactiveClass = 'px-2.5 py-1 rounded-lg font-medium text-slate-600 hover:text-slate-900 transition';
 
-            document.getElementById('btnMetricBp').className = metric === 'bp' ? activeClass : inactiveClass;
-            document.getElementById('btnMetricHr').className = metric === 'hr' ? activeClass : inactiveClass;
-            document.getElementById('btnMetricSlot').className = metric === 'slotAvg' ? activeClass : inactiveClass;
+            const btnBp = document.getElementById('btnMetricBp');
+            const btnHr = document.getElementById('btnMetricHr');
+            const btnSlot = document.getElementById('btnMetricSlot');
+
+            if (btnBp) btnBp.className = metric === 'bp' ? activeClass : inactiveClass;
+            if (btnHr) btnHr.className = metric === 'hr' ? activeClass : inactiveClass;
+            if (btnSlot) btnSlot.className = metric === 'slotAvg' ? activeClass : inactiveClass;
 
             updateChart();
         }
