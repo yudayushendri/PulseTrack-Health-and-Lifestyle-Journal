@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PulseTrack - Health & Lifestyle Journal</title>
+
+    <!-- iOS Web App & Home Screen Icon Settings -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="PulseTrack">
+    
+    <!-- Custom Home Screen App Icon (Base64 PNG & SVG Data URI) -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180' width='180' height='180'><rect width='180' height='180' rx='40' fill='%230f766e'/><path d='M0 0l180 180H0z' fill='%23e11d48' opacity='0.35'/><path d='M90 128s-35-22-35-43c0-12 9.5-21 21.5-21 8 0 15 4.5 18.5 11 3.5-6.5 10.5-11 18.5-11 12 0 21.5 9 21.5 21 0 21-35 43-35 43z' fill='white'/><path d='M68 90h12l4-10 7 20 6-14 4 4h11' stroke='%230f766e' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180' width='180' height='180'><rect width='180' height='180' rx='40' fill='%230f766e'/><path d='M0 0l180 180H0z' fill='%23e11d48' opacity='0.35'/><path d='M90 128s-35-22-35-43c0-12 9.5-21 21.5-21 8 0 15 4.5 18.5 11 3.5-6.5 10.5-11 18.5-11 12 0 21.5 9 21.5 21 0 21-35 43-35 43z' fill='white'/><path d='M68 90h12l4-10 7 20 6-14 4 4h11' stroke='%230f766e' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js -->
@@ -103,7 +113,7 @@
                 <div class="space-y-2 max-w-2xl">
                     <div class="flex items-center gap-2 flex-wrap">
                         <span id="wifeGreetingBadge" class="px-3 py-0.5 rounded-full text-xs font-semibold bg-rose-500/20 text-rose-200 border border-rose-500/30 flex items-center gap-1.5">
-                            <i class="fa-solid fa-heart text-rose-400"></i> Welcome, My Love!
+                            <i class="fa-solid fa-heart text-rose-400"></i> Welcome, Dita Sayang!
                         </span>
                         <span id="currentDateDisplay" class="text-xs text-slate-300"></span>
                     </div>
@@ -808,7 +818,7 @@
 
         function loadAllStoredLogs() {
             try {
-                bpLogs = JSON.parse(localStorage.getItem(STORAGE_KEY_BP)) || [];
+                bpLogs = JSON.parse(localStorage.getItem(STORAGE_KEY_BP)) || JSON.parse(localStorage.getItem('pulse30_bp_logs_v1')) || [];
                 exerciseLogs = JSON.parse(localStorage.getItem(STORAGE_KEY_EX)) || [];
                 mealLogs = JSON.parse(localStorage.getItem(STORAGE_KEY_MEALS)) || [];
                 sleepLogs = JSON.parse(localStorage.getItem(STORAGE_KEY_SLEEP)) || [];
@@ -1546,7 +1556,7 @@
             });
 
             const encodedUri = encodeURI(csvContent);
-            const link = document.createElement('a');
+            const link = document.getElementById('downloadAnchor') || document.createElement('a');
             link.setAttribute('href', encodedUri);
             link.setAttribute('download', `PulseTrack_Health_Journal_${getTodayString()}.csv`);
             document.body.appendChild(link);
