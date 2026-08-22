@@ -1546,24 +1546,29 @@
             }
 
             let csvContent = 'Type,Date,Details\n';
+            
             bpLogs.forEach(l => {
                 csvContent += `Blood Pressure,${l.date},"${l.slot} - ${l.systol}/${l.diastol} mmHg - ${l.hr} BPM - Notes: ${l.notes || ''}"\n`;
             });
+            
             exerciseLogs.forEach(l => {
-                csvContent += `Exercise,${l.date},"${l.type} - ${l.duration} mins - Intensity: ${l.intensity}"\n`;
+                csvContent += `Exercise,${l.date},"${l.type} - ${l.duration} mins - Intensity: ${l.intensity} - Notes: ${l.notes || ''}"\n`;
             });
+            
             mealLogs.forEach(l => {
-                csvContent += `Meals,${l.date},"${l.type} - ${l.desc} - Sodium: ${l.sodium}"\n`;
+                // Meals use 'desc' for the food logged and 'mood' for how she felt
+                csvContent += `Meals,${l.date},"${l.type} - Food: ${l.desc} - Sodium: ${l.sodium} - Mood: ${l.mood}"\n`;
             });
+            
             sleepLogs.forEach(l => {
-                csvContent += `Sleep,${l.date},"${l.hours} hrs - Quality: ${l.quality}"\n`;
+                csvContent += `Sleep,${l.date},"${l.hours} hrs - Quality: ${l.quality} - Refreshed: ${l.refreshed} - Notes: ${l.notes || ''}"\n`;
             });
 
             // Create a clean, unique filename with the exact date and time
             const now = new Date();
             const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
             const month = monthNames[now.getMonth()];
-            const day = now.getDate();
+            const day = String(now.getDate()).padStart(2, '0');
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const cleanFileName = `PulseTrack_Journal_${month}${day}_${hours}${minutes}.csv`;
@@ -1572,7 +1577,7 @@
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const file = new File([blob], cleanFileName, { type: 'text/csv' });
 
-            // Trigger the native iOS/Android Share Sheet
+            // Trigger the native iOS Share Sheet
             if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
                 navigator.share({
                     files: [file],
@@ -1592,7 +1597,7 @@
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                showToast('Health journal exported!');
+                showToast('Complete health journal exported!');
             }
         }
 
